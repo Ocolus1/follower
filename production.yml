@@ -3,7 +3,6 @@ version: '3'
 volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
-  production_traefik: {}
 
 services:
   django: &django
@@ -19,6 +18,16 @@ services:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     command: /start
+    networks:
+      - proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.follow-secure.entrypoints=websecure"
+      - "traefik.http.routers.follow-secure.rule=Host(`follow.africandao.com`)"
+      - "traefik.http.routers.follow-secure.service=follow-service"
+      - "traefik.http.services.follow-service.loadbalancer.server.port=5000"
 
   postgres:
     build:
@@ -31,34 +40,54 @@ services:
     env_file:
       - ./.envs/.production/.postgres
 
-  traefik:
-    build:
-      context: .
-      dockerfile: ./compose/production/traefik/Dockerfile
-    image: follower_production_traefik
-    depends_on:
-      - django
-    volumes:
-      - production_traefik:/etc/traefik/acme:z
-    ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
-      - "0.0.0.0:5555:5555"
-
   redis:
     image: redis:6
 
   celeryworker:
-    <<: *django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    networks:
+      - default
     image: follower_production_celeryworker
     command: /start-celeryworker
 
   celerybeat:
-    <<: *django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
     image: follower_production_celerybeat
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    networks:
+      - default
     command: /start-celerybeat
 
   flower:
-    <<: *django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    networks:
+      - default
     image: follower_production_flower
     command: /start-flower
+
+networks:
+  proxy:
+    external: true
