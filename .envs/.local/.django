@@ -1,0 +1,24 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+IPYTHONDIR=/app/.ipython
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+
+# Flower
+CELERY_FLOWER_USER=hZHzdkvSVVnVcYKfpLPBtiLnDSBGLFZE
+CELERY_FLOWER_PASSWORD=QKr3S9fb0LGLDSa6Vk1QbOa3nCnLPz8gYtGwLwcFW7jdvPehJDeNgL9eRvUX17Tz
+
+
+TWITTER_API_URL=https://api.twitter.com/1.1
+TWITTER_CONSUMER_KEY=1ztYA6zskcWofsBUlt6Wl3nkw
+TWITTER_CONSUMER_SECRET=ASVisquPLGzHcPvidFp11feCI5vYLQU7rfLhFUjSKESLyoE8ut
+TWITTER_ACCESS_TOKEN=1222872617025200130-PGHCB9UrDVzmKj7eERnseL6CoF7A00
+TWITTER_ACCESS_TOKEN_SECRET=xU6U4Le4MGdNIUEbLWkcRDjdeBg38bO487CZiyrc3UJ9J
+TWITTER_BEARER_TOKEN=AAAAAAAAAAAAAAAAAAAAAM82cQEAAAAAH8PlWrmuP%2B0DiWI0W7NpZWw5Z%2B8%3DfEl7iJ7gkMdBLLPo3kW9eiRJl8LDNsY6nbuP9TwCdONTGXPTYe
+TWITTER_WEBHOOK_ENV=dev
+WEBHOOK_URL=https://follow.africandao.com/twitter

@@ -1,0 +1,150 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %} Tweego - Subscription {% endblock %}
+{% block content %}
+
+<style type="text/css">
+    .pricing_tag1 {
+        background-color: blue;
+        color: #ffffff;
+        text-align: center;
+        width: 20%;
+        padding: 2rem 0 0 0;
+        height: 16rem;
+        position: relative;
+    }
+
+    .pricing_h5 {
+        padding: .7rem auto;
+    }
+
+    .free {
+        font-size: 120%;
+    }
+
+    .subscribe {
+        background-color: rgb(255, 187, 0);
+        padding: 1rem;
+        width: 100%;
+        margin: auto;
+        color: #ffffff;
+        border: 1px solid rgb(255, 187, 0);
+    }
+
+    .subscribe_div {
+        background-color: darkblue;
+        margin: 0;
+        padding: .5rem .5rem 2rem .5rem;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .cancel_sub {
+        width: 20%;
+        margin-top: 0;
+        padding: .5rem;
+        background-color: rgb(169, 169, 169);
+    }
+    .cancel_sub button {
+        background-color: rgb(255, 96, 96);
+        padding: 1rem;
+        width: 100%;
+        margin: auto;
+        color: #ffffff;
+        border: 1px solid rgb(255, 96, 96);
+    }
+</style>
+
+<!-- Custom styles for this template -->
+<link href="{% static 'follow_me/css/dashboard.css' %}" rel="stylesheet">
+
+{% include "./_header.html" %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% include "./sidebar.html" %}
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="container p-3">
+                    <div>
+                        <div>
+                            <div class="pricing_tag1">
+                                <h5 class="pricing_h5 text-white">BASIC</h5>
+                                <p class="free">FREE</p>
+                                <p class="billing">With Annual Billing</p>
+                                <div class="subscribe_div">
+                                    {% csrf_token %}
+                                    {% if check_sub == "verified" %}
+                                    <button class="subscribe text-decoration-line-through" id="subscribe" disabled>SUBCRIBE</button>
+                                    {% else %}
+                                    <button class="subscribe" id="subscribe">SUBCRIBE</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if check_sub == "verified" %}
+                            <div class="cancel_sub">
+                                <button class="cancel">CANCEL</button>
+                            </div>
+                            {% else %}
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+{% endblock %}
+{% block extrajs %}
+<script class="text/javascript">
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    var sub = document.querySelector("#subscribe");
+    var cancel = document.querySelector(".cancel");
+    sub.addEventListener("click", () => {
+        let url = "subscribe"
+        body_send = JSON.stringify({ "msg": "free subscription" })
+        fetch(url, {
+            method: "post",
+            headers: {
+                "X-CSRFToken": csrftoken,
+            },
+            body: body_send
+        })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.message == "Success") {
+                alert("You have subcribed successfully")
+                window.location.reload();
+            }
+            console.log(res)
+        })
+        .catch((res) => console.log(res))
+    })
+    cancel.addEventListener("click", () => {
+        let url = "subscribe"
+        body_send = JSON.stringify({ "msg": "cancel subscription" })
+        console.log("super")
+        fetch(url, {
+            method: "post",
+            headers: {
+                "X-CSRFToken": csrftoken,
+            },
+            body: body_send
+        })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res)
+            if (res.message == "Success") {
+                alert("You have cancelled  successfully")
+                window.location.reload();
+            }
+        })
+        .catch((res) => console.log(res))
+    })
+</script>
+{% endblock %}
