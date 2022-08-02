@@ -42,7 +42,7 @@ def callback(request):
         content = {"error_message": error_message}
         return render(request, "follow_me/error.html", content)
     if oauth_token not in oauth_store:
-        error_message = "oauth_token not found locally"
+        error_message = "oauth_token not found locally" + oauth_store
         content = {"error_message": error_message}
         return render(request, "follow_me/error.html", content)
     request_secret = oauth_store[oauth_token]
