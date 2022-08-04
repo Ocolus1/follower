@@ -277,3 +277,4 @@ follower/media/
 .env
 .envs/*
 !.envs/.local/
+certs/*

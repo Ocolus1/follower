@@ -1,4 +1,4 @@
-{% extends '../base.html' %}
+{% extends '../../base.html' %}
 {% load static %}
 {% block title %} Tweego - Subscription {% endblock %}
 {% block content %}
@@ -100,7 +100,7 @@
 </div>
 
 {% endblock %}
-{% block extrajs %}
+{% block inline_javascript %}
 <script class="text/javascript">
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     var sub = document.querySelector("#subscribe");
@@ -128,7 +128,6 @@
     cancel.addEventListener("click", () => {
         let url = "subscribe"
         body_send = JSON.stringify({ "msg": "cancel subscription" })
-        console.log("super")
         fetch(url, {
             method: "post",
             headers: {
@@ -147,4 +146,4 @@
         .catch((res) => console.log(res))
     })
 </script>
-{% endblock %}
+{% endblock inline_javascript %}

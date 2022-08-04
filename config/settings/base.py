@@ -241,16 +241,32 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s "
-            "%(process)d %(thread)d %(message)s"
-        }
+            "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
     },
     "handlers": {
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
-        }
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "level": "DEBUG",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "follower.follow_me": {
+            "handers": ["file", "console"],
+            "level": "DEBUG",
+        },
     },
     "root": {"level": "INFO", "handlers": ["console"]},
 }
@@ -307,3 +323,4 @@ TWITTER_BEARER_TOKEN = env("TWITTER_BEARER_TOKEN")
 TWITTER_WEBHOOK_ENV = env("TWITTER_WEBHOOK_ENV")
 TWITTER_API_URL = env("TWITTER_API_URL")
 WEBHOOK_URL = env("WEBHOOK_URL")
+CALLBACK_URL = env("CALLBACK_URL")

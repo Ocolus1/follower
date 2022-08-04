@@ -2,6 +2,7 @@ import base64
 import hashlib
 import hmac
 import json
+import logging
 
 import tweepy
 from django.conf import settings
@@ -16,10 +17,13 @@ from .config import create_api
 from .models import Message, User
 
 oauth_store = {}
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect("follow_me:dashboard")
     # # calling the instance of the consumer
     user_auth = create_api()
 
@@ -74,7 +78,7 @@ def callback(request):
         user = authenticate(twitter_id=int(id), password=access_token)
         if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            return redirect("follow_me:dashboard")
         else:
             print("An error occured inner")
     else:
@@ -92,10 +96,10 @@ def callback(request):
             user = authenticate(twitter_id=int(id), password=access_token)
             if user is not None:
                 login(request, user)
-                return redirect("dashboard")
+                return redirect("follow_me:dashboard")
             else:
                 print("An error occured")
-    return redirect("dashboard")
+    return redirect("follow_me:dashboard")
 
 
 def dashboard(request):

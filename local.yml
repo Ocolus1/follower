@@ -20,9 +20,22 @@ services:
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     command: /start
+    networks:
+      - proxy
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.django-secure.entrypoints=websecure
+      - traefik.http.routers.django-secure.rule=Host(`cypherme.local`)
+      - traefik.http.routers.django-secure.tls=true
+      - traefik.http.routers.django-secure.service=django-service
+      - traefik.http.services.django-service.loadbalancer.server.port=8000
+      # - traefik.http.routers.django-secure.service=api@internal
+
 
   postgres:
     build:
@@ -35,6 +48,8 @@ services:
       - follower_local_postgres_data_backups:/backups:z
     env_file:
       - ./.envs/.local/.postgres
+    networks:
+      - default
 
   docs:
     image: follower_local_docs
@@ -52,35 +67,43 @@ services:
     ports:
       - "9000:9000"
     command: /start-docs
+    networks:
+      - default
 
   redis:
     image: redis:6
     container_name: follower_local_redis
+    networks:
+      - default
 
-  celeryworker:
-    <<: *django
-    image: follower_local_celeryworker
-    container_name: follower_local_celeryworker
-    depends_on:
-      - redis
-      - postgres
-    ports: []
-    command: /start-celeryworker
+networks:
+  proxy:
+    external: true
 
-  celerybeat:
-    <<: *django
-    image: follower_local_celerybeat
-    container_name: follower_local_celerybeat
-    depends_on:
-      - redis
-      - postgres
-    ports: []
-    command: /start-celerybeat
+  # celeryworker:
+  #   <<: *django
+  #   image: follower_local_celeryworker
+  #   container_name: follower_local_celeryworker
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #   ports: []
+  #   command: /start-celeryworker
 
-  flower:
-    <<: *django
-    image: follower_local_flower
-    container_name: follower_local_flower
-    ports:
-      - "5555:5555"
-    command: /start-flower
+  # celerybeat:
+  #   <<: *django
+  #   image: follower_local_celerybeat
+  #   container_name: follower_local_celerybeat
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #   ports: []
+  #   command: /start-celerybeat
+
+  # flower:
+  #   <<: *django
+  #   image: follower_local_flower
+  #   container_name: follower_local_flower
+  #   ports:
+  #     - "5555:5555"
+  #   command: /start-flower

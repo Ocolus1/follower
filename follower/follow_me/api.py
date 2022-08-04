@@ -57,18 +57,18 @@ def deleteWebhook():
 
 
 def getSubscription():
-    try:
-        # res = requests.get(
-        #     'https://api.twitter.com/1.1/account_activity/all/dev/subscriptions.json',
-        #     auth=oauth
-        # )
-        res = requests.get(
-            "https://api.twitter.com/1.1/account_activity/all/subscriptions/count.json",
-            headers=authorizationHeaders,
-        )
-        return res.json()
-    except Exception:
-        print("An error occrred")
+    # try:
+    # res = requests.get(
+    #     'https://api.twitter.com/1.1/account_activity/all/dev/subscriptions.json',
+    #     auth=oauth
+    # )
+    res = requests.get(
+        "https://api.twitter.com/1.1/account_activity/all/subscriptions/count.json",
+        headers=authorizationHeaders,
+    )
+    return res.json()
+    # except Exception:
+    #     print("An error occrred")
 
 
 def getMySubscription(oauther):

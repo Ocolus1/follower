@@ -10,6 +10,6 @@ def create_api():
     auth = tweepy.OAuth1UserHandler(
         settings.TWITTER_CONSUMER_KEY,
         settings.TWITTER_CONSUMER_SECRET,
-        callback="https://follow.africandao.com/callback",
+        callback=f"{settings.CALLBACK_URL}",
     )
     return auth
