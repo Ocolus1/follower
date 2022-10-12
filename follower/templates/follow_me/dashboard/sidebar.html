@@ -1,0 +1,94 @@
+{% load static %}
+<nav id="sidebarMenu" class="col-md-2 d-md-block sidebar collapse">
+  <div class="position-sticky pt-4">
+    <div class="text-center p-1 pt-2">
+      <a class="dash_link" aria-current="page" href="/dashboard">
+      <img src="{% static 'follow_me/img/Logo.png' %}" class="sidebar_img_logo" alt="arrow head">
+      <span class="fs-4 fw-bold">
+          Tweet Hunter
+      </span>
+      </a>
+      <button class="btn btn1">Write a tweet</button>
+    </div>
+    <ul class="nav mt-4 ps-3 flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="/auto_dm">
+          <img src="{% static 'follow_me/svg/auto_dm.svg' %}" class="" alt="auto dm">
+          <span class="ps-2">AutoDM</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <img src="{% static 'follow_me/svg/auto_tweet.svg' %}" class="" alt="auto tweet">
+          <span class="ps-2">Auto Tweet</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/inspiration">
+          <img src="{% static 'follow_me/svg/daily_inspiration.svg' %}" class="" alt="daily_inspiration">
+          <span class="ps-2">Daily Inspiration</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <img src="{% static 'follow_me/svg/analytics.svg' %}" class="" alt="analytics">
+          <span class="ps-2">Analytics</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <img src="{% static 'follow_me/svg/analytics.svg' %}" class="" alt="Settings">
+          <span class="ps-2">Settings</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/subscribe">
+          <img src="{% static 'follow_me/svg/daily_inspiration.svg' %}" class="" alt="daily_inspiration">
+          <span class="ps-2">Subscription</span>
+        </a>
+      </li>
+
+    </ul>
+
+
+  </div>
+</nav>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var pathname = window.location.pathname;
+    $('.position-sticky .flex-column').find('.active').removeClass('active');
+    $('.nav-item .nav-link').each(function () {
+      if ($(this).attr('href') == pathname) {
+        $(this).addClass('active');
+    }
+    });
+  });
+</script>
+
+<style>
+  .sidebar {
+    background: #F6FAFD;
+    height: 100vh;
+    box-shadow: 8px 0px 16px rgba(204, 204, 204, 0.25);
+  }
+
+  .btn1 {
+    background: #20A2F1;
+    border-radius: 8px;
+    padding: 0.625em 2.4em;
+    margin-top: 2rem;
+  }
+  ul .nav {
+    margin-top: 2.5rem;
+  }
+  .nav-link {
+    color: #000000;
+  }
+  .nav-link:hover {
+    color: #20A2F1;
+  }
+  .dash_link, .dash_link:hover {
+    color: #000000;
+    text-decoration: none;
+  }
+</style>

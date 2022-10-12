@@ -1,0 +1,119 @@
+{% load static %}
+<div class="outer_con" id="{{tweet.id}}">
+  <div class="top_con">
+    <div class="inner_top_con d-flex align-items-center w-100 p-0">
+      <div class="me-auto">
+        <img src="{{tweet.profile_image}}" class="" alt="profile_pic">
+      </div>
+      <div>
+        <div class="d-flex align-items-end ">
+          <p class="mx-2 text-muted">{{tweet.date|slice:"0:10"}} {{tweet.date|slice:"26:"}}</p>
+          <img src="{% static 'follow_me/svg/lightning.svg' %}" class="the_icon mx-2" alt="lightning">
+          <img src="{% static 'follow_me/svg/star.svg' %}" class="the_icon" alt="star">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="middle_con">
+    <div class="inner_middle_con p-2 px-3">
+      <div class="body_text">
+        {{tweet.full_text}}
+      </div>
+      <!-- <div class="body_img">
+        <img src="{{tweet.profile_image}}" class="" alt="body_img">
+      </div> -->
+    </div>
+  </div>
+  <div class="bottom_con">
+    <div class="inner_bottom_con d-flex align-items-center w-100 p-0">
+      <span class="d-flex justify-content-between">
+        <img src="{% static 'follow_me/svg/comment.svg' %}" class="mx-1" alt="comment">
+        <span class="px-2">{{tweet.reply_count}}</span>
+      </span>
+      <span class="d-flex justify-content-between">
+        <img src="{% static 'follow_me/svg/retweet.svg' %}" class="mx-1" alt="retweet">
+        <span class="px-2">{{tweet.retweet_counts}}</span>
+      </span>
+      <span class="d-flex justify-content-between">
+        <img src="{% static 'follow_me/svg/like.svg' %}" class="mx-1" alt="like">
+        <span class="px-2">{{tweet.likes_count}}</span>
+      </span>
+      <span>
+        <img src="{% static 'follow_me/svg/share.svg' %}" class="mx-1" alt="share">
+      </span>
+      <span class="ms-auto justify-content-between">
+        <span>
+          <button class="btn btn-outline-secondary fw-bold text-dark px-2"
+          onclick="handleTweet('{{tweet.id}}')">
+            Edit & tweet
+          </button>
+        </span>
+        <span class="dropend">
+            <img src="{% static 'follow_me/svg/three_dot.svg' %}"
+            class="mx-2 three_dot" alt="three_dot" data-check="0" onclick="handleClick('{{tweet.id}}')">
+            <ul class="menu">
+              <!-- Dropdown menu links -->
+              <form method="post" action="delete_tweet">
+                {% csrf_token %}
+                <input name="delete_id" value="{{tweet.id}}" hidden>
+                <p class="delete_p"><button class="btn btn-outline-danger delete" type="submit" href="#">Delete</button></p>
+              </form>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+<style>
+  .outer_con{
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+  }
+  .top_con {
+    border-bottom: 1px solid #CCCCCC;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 1.26rem 1rem;
+  }
+  .the_icon {
+    background: #EEF1FA;
+    border-radius: 10.2643px;
+    padding: 1rem;
+  }
+  .bottom_con {
+    border-top: 1px solid #CCCCCC;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+  .three_dot:hover {
+    cursor: pointer;
+    position: relative;
+  }
+  .menu {
+    z-index: 4;
+    padding: 0;
+    margin-top: .5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 1rem;
+    background-color: #fff;
+    box-shadow: 2px 1px #000;
+  }
+  .delete {
+    margin-bottom: 0;
+  }
+  .delete_p {
+    margin-bottom: 0;
+  }
+</style>
+<script>
+
+   $(document).ready(function () {
+    $(".menu").css("display", "none")
+  });
+
+</script>

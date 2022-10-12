@@ -1,0 +1,327 @@
+{
+  "contributors": null,
+  "coordinates": null,
+  "created_at": "Sat Oct 08 14:20:29 +0000 2022",
+  "edit_controls": {
+      "editable_until_ms": 1665240629079,
+      "edits_remaining": 5
+  },
+  "edit_history": {
+      "edit_tweet_ids": [
+          "1578752192219344904"
+      ],
+      "initial_tweet_id": "1578752192219344904"
+  },
+  "editable": false,
+  "entities": {
+      "hashtags": [],
+      "symbols": [],
+      "urls": [],
+      "user_mentions": [
+          {
+              "id": 2333988375,
+              "id_str": "2333988375",
+              "indices": [
+                  3,
+                  15
+              ],
+              "name": "Instant Foot \u26bd\ufe0f",
+              "screen_name": "lnstantFoot"
+          }
+      ]
+  },
+  "favorite_count": 0,
+  "favorited": false,
+  "filter_level": "low",
+  "geo": null,
+  "id": 1578752192219344904,
+  "id_str": "1578752192219344904",
+  "in_reply_to_screen_name": null,
+  "in_reply_to_status_id": null,
+  "in_reply_to_status_id_str": null,
+  "in_reply_to_user_id": null,
+  "in_reply_to_user_id_str": null,
+  "is_quote_status": false,
+  "lang": "fr",
+  "matching_rules": [
+      {
+          "tag": null
+      }
+  ],
+  "place": null,
+  "quote_count": 0,
+  "reply_count": 0,
+  "retweet_count": 0,
+  "retweeted": false,
+  "retweeted_status": {
+      "contributors": null,
+      "coordinates": null,
+      "created_at": "Sat Oct 08 09:27:46 +0000 2022",
+      "display_text_range": [
+          0,
+          140
+      ],
+      "edit_controls": {
+          "editable_until_ms": 1665223066000,
+          "edits_remaining": 5
+      },
+      "edit_history": {
+          "edit_tweet_ids": [
+              "1578678531260702720"
+          ],
+          "initial_tweet_id": "1578678531260702720"
+      },
+      "editable": false,
+      "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "urls": [
+              {
+                  "display_url": "twitter.com/i/web/status/1\u2026",
+                  "expanded_url": "https://twitter.com/i/web/status/1578678531260702720",
+                  "indices": [
+                      120,
+                      143
+                  ],
+                  "url": "https://t.co/4Fj1csop6v"
+              }
+          ],
+          "user_mentions": []
+      },
+      "extended_tweet": {
+          "display_text_range": [
+              0,
+              191
+          ],
+          "entities": {
+              "hashtags": [],
+              "media": [
+                  {
+                      "display_url": "pic.twitter.com/HHi0el4Ggv",
+                      "expanded_url": "https://twitter.com/lnstantFoot/status/1578678531260702720/photo/1",
+                      "id": 1578678189714509824,
+                      "id_str": "1578678189714509824",
+                      "indices": [
+                          192,
+                          215
+                      ],
+                      "media_url": "http://pbs.twimg.com/media/FeiXcwiXEAAT30g.jpg",
+                      "media_url_https": "https://pbs.twimg.com/media/FeiXcwiXEAAT30g.jpg",
+                      "sizes": {
+                          "large": {
+                              "h": 675,
+                              "resize": "fit",
+                              "w": 1200
+                          },
+                          "medium": {
+                              "h": 675,
+                              "resize": "fit",
+                              "w": 1200
+                          },
+                          "small": {
+                              "h": 383,
+                              "resize": "fit",
+                              "w": 680
+                          },
+                          "thumb": {
+                              "h": 150,
+                              "resize": "crop",
+                              "w": 150
+                          }
+                      },
+                      "type": "photo",
+                      "url": "https://t.co/HHi0el4Ggv"
+                  }
+              ],
+              "symbols": [],
+              "urls": [],
+              "user_mentions": [
+                  {
+                      "id": 970939705629069312,
+                      "id_str": "970939705629069312",
+                      "indices": [
+                          176,
+                          190
+                      ],
+                      "name": "The Athletic UK",
+                      "screen_name": "TheAthleticUK"
+                  }
+              ]
+          },
+          "extended_entities": {
+              "media": [
+                  {
+                      "display_url": "pic.twitter.com/HHi0el4Ggv",
+                      "expanded_url": "https://twitter.com/lnstantFoot/status/1578678531260702720/photo/1",
+                      "id": 1578678189714509824,
+                      "id_str": "1578678189714509824",
+                      "indices": [
+                          192,
+                          215
+                      ],
+                      "media_url": "http://pbs.twimg.com/media/FeiXcwiXEAAT30g.jpg",
+                      "media_url_https": "https://pbs.twimg.com/media/FeiXcwiXEAAT30g.jpg",
+                      "sizes": {
+                          "large": {
+                              "h": 675,
+                              "resize": "fit",
+                              "w": 1200
+                          },
+                          "medium": {
+                              "h": 675,
+                              "resize": "fit",
+                              "w": 1200
+                          },
+                          "small": {
+                              "h": 383,
+                              "resize": "fit",
+                              "w": 680
+                          },
+                          "thumb": {
+                              "h": 150,
+                              "resize": "crop",
+                              "w": 150
+                          }
+                      },
+                      "type": "photo",
+                      "url": "https://t.co/HHi0el4Ggv"
+                  }
+              ]
+          },
+          "full_text": "66% des anciens footballeurs interrog\u00e9s (&gt;100) pensent que Cristiano Ronaldo a eu une meilleure carri\u00e8re que Lionel Messi !\n\nC'est le r\u00e9sultat issu d'un sondage r\u00e9alis\u00e9 par @TheAthleticUK. https://t.co/HHi0el4Ggv"
+      },
+      "favorite_count": 5870,
+      "favorited": false,
+      "filter_level": "low",
+      "geo": null,
+      "id": 1578678531260702720,
+      "id_str": "1578678531260702720",
+      "in_reply_to_screen_name": null,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "is_quote_status": false,
+      "lang": "fr",
+      "place": null,
+      "possibly_sensitive": false,
+      "quote_count": 214,
+      "reply_count": 175,
+      "retweet_count": 703,
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "text": "66% des anciens footballeurs interrog\u00e9s (&gt;100) pensent que Cristiano Ronaldo a eu une meilleure carri\u00e8re que Lionel\u2026 https://t.co/4Fj1csop6v",
+      "truncated": true,
+      "user": {
+          "contributors_enabled": false,
+          "created_at": "Sun Feb 09 16:16:44 +0000 2014",
+          "default_profile": false,
+          "default_profile_image": false,
+          "description": "Vivons l'instant, vivons football. Bienvenue sur Instant Foot ! Contact : instant.foot2@gmail.com \ud83d\udce7",
+          "favourites_count": 7389,
+          "follow_request_sent": null,
+          "followers_count": 1405574,
+          "following": null,
+          "friends_count": 13988,
+          "geo_enabled": true,
+          "id": 2333988375,
+          "id_str": "2333988375",
+          "is_translator": false,
+          "lang": null,
+          "listed_count": 786,
+          "location": "Paris, France",
+          "name": "Instant Foot \u26bd\ufe0f",
+          "notifications": null,
+          "profile_background_color": "ABB8C2",
+          "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+          "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+          "profile_background_tile": false,
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2333988375/1623349799",
+          "profile_image_url": "http://pbs.twimg.com/profile_images/1403323163413516289/B7hQ2fF1_normal.jpg",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1403323163413516289/B7hQ2fF1_normal.jpg",
+          "profile_link_color": "1B95E0",
+          "profile_sidebar_border_color": "000000",
+          "profile_sidebar_fill_color": "000000",
+          "profile_text_color": "000000",
+          "profile_use_background_image": true,
+          "protected": false,
+          "screen_name": "lnstantFoot",
+          "statuses_count": 122020,
+          "time_zone": null,
+          "translator_type": "none",
+          "url": "https://linkerz.fr/instantfoot",
+          "utc_offset": null,
+          "verified": false,
+          "withheld_in_countries": []
+      }
+  },
+  "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+  "text": "RT @lnstantFoot: 66% des anciens footballeurs interrog\u00e9s (&gt;100) pensent que Cristiano Ronaldo a eu une meilleure carri\u00e8re que Lionel Messi\u2026",
+  "truncated": false,
+  "user": {
+      "contributors_enabled": false,
+      "created_at": "Sun Nov 07 07:19:45 +0000 2010",
+      "default_profile": false,
+      "default_profile_image": false,
+      "description": "Etudiant en sces Diplomatiques et relations internationales. C'est un jeune \u00e9crivain ( po\u00e8te)!!!!",
+      "favourites_count": 4085,
+      "follow_request_sent": null,
+      "followers_count": 472,
+      "following": null,
+      "friends_count": 2249,
+      "geo_enabled": true,
+      "id": 212854314,
+      "id_str": "212854314",
+      "is_translator": false,
+      "lang": null,
+      "listed_count": 21,
+      "location": "Port-au-prince,HAITI",
+      "name": "Labb\u00e9e Jimmy",
+      "notifications": null,
+      "profile_background_color": "352726",
+      "profile_background_image_url": "http://abs.twimg.com/images/themes/theme5/bg.gif",
+      "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme5/bg.gif",
+      "profile_background_tile": true,
+      "profile_banner_url": "https://pbs.twimg.com/profile_banners/212854314/1468860567",
+      "profile_image_url": "http://pbs.twimg.com/profile_images/378800000755460987/c87e0eed6d3f3b464dde9e86ae80ff78_normal.jpeg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000755460987/c87e0eed6d3f3b464dde9e86ae80ff78_normal.jpeg",
+      "profile_link_color": "D02B55",
+      "profile_sidebar_border_color": "959C5E",
+      "profile_sidebar_fill_color": "99CC33",
+      "profile_text_color": "3E4415",
+      "profile_use_background_image": true,
+      "protected": false,
+      "screen_name": "blackjumbo89",
+      "statuses_count": 34593,
+      "time_zone": null,
+      "translator_type": "none",
+      "url": "https://twitter.com/blackjumbo89",
+      "utc_offset": null,
+      "verified": false,
+      "withheld_in_countries": []
+  }
+},
+{
+  "date": "Sat Oct 08 15:00:32 +0000 2022",
+  "full_text": "Cristiano Ronaldo is the only footballer to ever win 4 Ballon d\u2019Or and 4 UCL trophies in a span of 5 years. \ud83d\udc4f\ud83c\udffd https://t.co/Y1S9caclM7",
+  "hyperlink": "https://twitter.com/twitter/status/1578762274314936320",
+  "likes_count": 0,
+  "profile_image": "https://pbs.twimg.com/profile_images/1555918545598431232/zQ1LL24C_normal.jpg",
+  "quote_count": 0,
+  "reply_count": 0,
+  "retweet_counts": 0,
+  "tweet_id": "1578762274314936320",
+  "tweet_type": "Retweet"
+},
+{
+  "date": "Sat Oct 08 15:00:32 +0000 2022",
+  "full_text": "Todos viendo la frustraci\u00f3n de Cristiano Ronaldo \ud83d\udc94 https://t.co/USciqk1nDY",
+  "hyperlink": "https://twitter.com/twitter/status/1578762274306920448",
+  "likes_count": 0,
+  "profile_image": "https://pbs.twimg.com/profile_images/1577433606896631813/w9yuqcjc_normal.jpg",
+  "quote_count": 0,
+  "reply_count": 0,
+  "retweet_counts": 0,
+  "tweet_id": "1578762274306920448",
+  "tweet_type": "Retweet"
+},

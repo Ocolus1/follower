@@ -1,0 +1,109 @@
+version: '3'
+
+volumes:
+  follower_local_postgres_data: {}
+  follower_local_postgres_data_backups: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: follower_local_django
+    container_name: follower_local_django
+    platform: linux/x86_64
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    # ports:
+    #   - "8000:8000"
+    command: /start
+    networks:
+      - proxy
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.django-secure.entrypoints=websecure
+      - traefik.http.routers.django-secure.rule=Host(`cypherme.local`)
+      - traefik.http.routers.django-secure.tls=true
+      - traefik.http.routers.django-secure.service=django-service
+      - traefik.http.services.django-service.loadbalancer.server.port=8000
+      # - traefik.http.routers.django-secure.service=api@internal
+
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: follower_production_postgres
+    container_name: follower_local_postgres
+    volumes:
+      - follower_local_postgres_data:/var/lib/postgresql/data:Z
+      - follower_local_postgres_data_backups:/backups:z
+    env_file:
+      - ./.envs/.local/.postgres
+    networks:
+      - default
+
+  docs:
+    image: follower_local_docs
+    container_name: follower_local_docs
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./follower:/app/follower:z
+    ports:
+      - "9000:9000"
+    command: /start-docs
+    networks:
+      - default
+
+  redis:
+    image: redis:6
+    container_name: follower_local_redis
+    networks:
+      - default
+
+networks:
+  proxy:
+    external: true
+
+  # celeryworker:
+  #   <<: *django
+  #   image: follower_local_celeryworker
+  #   container_name: follower_local_celeryworker
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #   ports: []
+  #   command: /start-celeryworker
+
+  # celerybeat:
+  #   <<: *django
+  #   image: follower_local_celerybeat
+  #   container_name: follower_local_celerybeat
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #   ports: []
+  #   command: /start-celerybeat
+
+  # flower:
+  #   <<: *django
+  #   image: follower_local_flower
+  #   container_name: follower_local_flower
+  #   ports:
+  #     - "5555:5555"
+  #   command: /start-flower

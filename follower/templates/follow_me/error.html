@@ -1,0 +1,18 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %} Error {% endblock %}
+{% block content %}
+<div class=" ">
+    <h2>error</h2>
+    	<div class="panel panel-danger">
+    		<div class="panel-heading">
+    			<h3 class="panel-title">Yikes, something went wrong!</h3>
+    		</div>
+    		<div class="panel-body">{{ error_message }}</div>
+    	</div>
+    	<a href="/" class="btn btn-small btn-primary">Let me try again</a>
+</div>
+{% endblock %}
+{% block extrajs %}
+    <script src="{% static 'follow_me/js/main.js' %}"></script>
+{% endblock %}

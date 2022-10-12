@@ -1,0 +1,110 @@
+{% load static %}
+<div class="container-fluid">
+  <div class="mb-3">
+    <h2 class="pt-md-5 pt-2">Tweet Inspirations For You</h2>
+    <p class="description">
+      Use these relevant inspirations for you next tweets!
+      Our AI engine selected these for you based on your Twitter account.
+    </p>
+    <a class="link1" href="/inspiration">Edit my personalized feed</a>
+  </div>
+  <div>
+    <div class="p-2 d-flex flex-row align-items-center justify-content-end">
+      <p class="refresh px-3 py-2" onclick="window.location.reload()"><i class="fas fa-random me-1"></i> Refresh</p>
+    </div>
+    <div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input class="form-control" name="q" placeholder="Search" value="{{query}}"/>
+          <button class="btn btn-outline-primary" type="submit">search</button>
+        </div>
+        <div class="accordion accordion-flush">
+          <div class="accordion-item">
+            <p class="accordion-header" id="headingTwo">
+              <div class="p-2 d-flex flex-row align-items-center justify-content-start">
+                <p class="refresh px-3 "
+                class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <i class="fas fa-filter me-1"></i> Filter
+                </p>
+              </div>
+            </p>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <div class="form-floating mb-3">
+                      <input type="text" id="likes_count" placeholder="0" value="{{likes_count}}" name="likes_count" class="form-control" >
+                      <label for="likes_count" >Likes</label>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-floating mb-3">
+                      <input type="text" id="retweet_counts" placeholder="0" value="{{retweet_counts}}" name="retweet_counts" class="form-control">
+                      <label for="retweet_counts" >Re-tweet</label>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-floating mb-3">
+                      <input type="text" id="reply_count" placeholder="0" value="{{reply_count}}" name="reply_count" class="form-control" >
+                      <label for="reply_count" >Reply Count</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row mt-2">
+      {% for tweet in tweets.object_list  %}
+      <div class="col-md-6" data-id="{{tweet.id}}">
+        {% include "../dashboard/components/comp.html" with tweet=tweet %}
+      </div>
+      {% endfor %}
+    </div>
+    <nav aria-label="Page navigation example" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if tweets.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="/dashboard?page=1">&laquo; first</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="/dashboard?page={{ tweets.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="#">
+          Page {{ tweets.number }} of {{ tweets.paginator.num_pages }}
+        </a></li>
+        {% if tweets.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="/dashboard?page={{ tweets.next_page_number }}">next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="/dashboard?page={{ tweets.paginator.num_pages }}">last &raquo;</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</div>
+<style>
+  .description, .link1 {
+    color: #7F8891;
+  }
+
+  .link1:hover {
+    color: #4f5356;
+  }
+  .refresh {
+    background: #F6FAFD;
+    border-radius: 4px;
+  }
+  .refresh:hover {
+    cursor: pointer;
+  }
+</style>
+<script>
+
+</script>

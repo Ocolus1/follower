@@ -1,0 +1,87 @@
+{% load static %}
+<div class="col-md-3 divider">
+  <div class=" ">
+    <div class="mt-5 d-flex justify-content-between">
+      <span class="comment_badge active">Compose</span>
+      <span class="comment_badge">Drafts</span>
+      <span class="comment_badge">Scheduled</span>
+      <span class="comment_badge">Sent</span>
+    </div>
+    <div>
+      <div class="d-flex mt-4 justify-content-between">
+        <div class="p-2 fw-bold">Your content</div>
+        <div class="p-2 text1">+ New draft</div>
+      </div>
+    </div>
+    <form method="post" action="create_tweet" >
+      {% csrf_token %}
+    <div>
+      <input type="text" name="id" class="myinputid" hidden>
+      <textarea class="myinput" name="tweet_body"  placeholder="Write here. &#10; &#10; Skip 3 lines to start a thread."></textarea>
+    </div>
+    <div>
+      <div class="d-flex mt-4 justify-content-between">
+        <button class="btn btn-outline-secondary border border-2 px-3 fw-bold tweet_now" type="submit">Tweet now</button>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <button type="button" class="btn btn-secondary">
+            <span class="d-flex align-items-center flex-column ">
+              <span class="add_to_queue fw-bold">Add to Queue</span>
+              <span class="date">July 15th, 2022, 5:00 PM</span>
+            </span>
+          </button>
+
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+              <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<style>
+  .comment_badge {
+    color: #7F8891;
+    font-family: 'Arial';
+    font-weight: 700;
+    font-size: 12px;
+    border-radius: 8px;
+    padding: 4px 14px;
+  }
+
+  .active {
+    background: #ECF2F7;
+  }
+
+  .text1 {
+    color: #9EA7AF;
+  }
+
+  .myinput {
+    border: 2px solid #CCCCCC;
+    width: 100%;
+    height: 15rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+    padding: .7rem;
+  }
+  .add_to_queue {
+    font-size: 12px;
+  }
+  .date {
+    font-size: 8.5px;
+  }
+  .divider{
+    border-left: 1px solid #CCCCCC;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+</style>

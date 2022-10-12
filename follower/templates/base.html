@@ -1,0 +1,98 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}Twitter Follow App{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This project uses Twitter API and tweepy to create automatic functions">
+    <meta name="author" content="Paul Awolesi">
+
+    <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+
+    {% block css %}
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Your stuff: Third-party CSS libraries go here -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://kit.fontawesome.com/9846bd7163.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet"  href="{% static 'follow_me/css/main.css' %}">
+    <!-- This file stores project-specific CSS -->
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+    {% endblock %}
+    <!-- Le javascript
+    ================================================== -->
+    {# Placed at the top of the document so pages load faster with defer #}
+    {% block javascript %}
+      <!-- Bootstrap JS -->
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js" integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <!-- Your stuff: Third-party javascript libraries go here -->
+
+      <!-- place project specific Javascript in this file -->
+      <script defer src="{% static 'js/project.js' %}"></script>
+
+    {% endblock javascript %}
+
+  </head>
+
+  <body>
+
+    <div >
+
+      {% block content %}
+
+      {% endblock content %}
+
+    </div> <!-- /container -->
+
+    {% block modal %}{% endblock modal %}
+
+    {% block inline_javascript %}
+    {% comment %}
+    Script tags with only code, no src (defer by default). To run
+    with a "defer" so that you run inline code:
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
+    </script>
+    {% endcomment %}
+    {% endblock inline_javascript %}
+    <script>
+      let myinput = document.getElementsByClassName('myinput'); //get the textarea element
+      let myinputid = document.getElementsByClassName('myinputid'); //get the textarea element
+      let outer_con = document.getElementsByClassName('outer_con'); //get the outer container for the tweet
+      let menu = document.getElementsByClassName('menu'); // get the menu element
+      // This function handles the click event on the menu icon
+      // to delete a saved tweet.
+      function handleClick (id) {
+        // loops through the saved tweet and picks the one with the same id
+        Array.from(outer_con).forEach((item, index) => {
+          if (item.id === id) {
+            // checks if the menu is open or not
+            if (item.getElementsByClassName('three_dot')[0].getAttribute('data-check') == "0"){
+              // displaying the menu dropdown to delete the tweet
+              item.getElementsByClassName('menu')[0].style.display = 'block';
+              item.getElementsByClassName('three_dot')[0].setAttribute('data-check', "1")
+            } else {
+              // hiding the menu dropdown to delete the tweet
+              item.getElementsByClassName('menu')[0].style.display = 'none';
+              item.getElementsByClassName('three_dot')[0].setAttribute('data-check', "0")
+            }
+          }
+        });
+      }
+
+      // This function sets the value of the textarea to the value of the tweet
+      function handleTweet(id) {
+        // loops through the saved tweet and picks the one with the same id
+        Array.from(outer_con).forEach((item, index) => {
+          if (item.id === id) {
+            // setting the value of the textarea to the value of the tweet
+            myinput[0].innerHTML = item.getElementsByClassName('body_text')[0].innerHTML.trim();
+            myinputid[0].value = id.trim();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
