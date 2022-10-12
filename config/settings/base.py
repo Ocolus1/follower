@@ -250,21 +250,17 @@ LOGGING = {
         },
     },
     "handlers": {
-<<<<<<< HEAD
         "file": {
             "class": "logging.FileHandler",
             "filename": str(APPS_DIR / "logs/general.log"),
             "level": "DEBUG",
             "formatter": "simple",
         },
-=======
->>>>>>> 52fa31450f89f4f5a325d5f279482012a3588fc6
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
-<<<<<<< HEAD
     },
     "loggers": {
         "follow_me": {
@@ -273,22 +269,6 @@ LOGGING = {
         },
     },
     "root": {"level": "INFO", "handlers": ["file", "console"]},
-=======
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": "general.log",
-            "level": "DEBUG",
-            "formatter": "simple",
-        },
-    },
-    "loggers": {
-        "follower.follow_me": {
-            "handers": ["file", "console"],
-            "level": "DEBUG",
-        },
-    },
-    "root": {"level": "INFO", "handlers": ["console"]},
->>>>>>> 52fa31450f89f4f5a325d5f279482012a3588fc6
 }
 
 # Celery
