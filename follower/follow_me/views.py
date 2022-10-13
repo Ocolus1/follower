@@ -3,7 +3,6 @@ import hashlib
 import hmac
 import json
 import logging
-import profile
 
 import tweepy
 from django.conf import settings
@@ -14,15 +13,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from requests_oauthlib import OAuth1, OAuth1Session
-import requests
+from requests_oauthlib import OAuth1
 from .utils import parse_tweets
 
-from .api import createSubscription, deleteSubscription, getMySubscription, getWebhook, deleteWebhook, createWebhook
+from .api import createSubscription, deleteSubscription, getMySubscription
 from .config import create_api
-from .models import Message, User, Tweets
+from .models import Message, User, Tweets, OuathStore
 
-oauth_store = {}
 logger = logging.getLogger(__name__)
 
 
@@ -39,7 +36,9 @@ def index(request):
     request_token = user_auth.request_token["oauth_token"]
     request_secret = user_auth.request_token["oauth_token_secret"]
 
-    oauth_store[request_token] = request_secret
+    OauthStore.objects.create(
+        request_token=request_token, request_secret=request_secret
+    )
     content = {"authorize_url": authorize_url}
     return render(request, "follow_me/index.html", content)
 
@@ -51,11 +50,12 @@ def callback(request):
         error_message = "callback param(s) missing"
         content = {"error_message": error_message}
         return render(request, "follow_me/error.html", content)
-    if oauth_token not in oauth_store:
-        error_message = f"oauth_token not found locally {oauth_store}"
+    if not OauthStore.objects.filter(request_token=oauth_token).exists():
+        error_message = f"oauth_token not found locally"
         content = {"error_message": error_message}
         return render(request, "follow_me/error.html", content)
-    request_secret = oauth_store[oauth_token]
+    oauth_store = OauthStore.objects.get(request_token=oauth_token)
+    request_secret = oauth_store.request_secret
     user_auth = create_api()
     user_auth.request_token = {
         "oauth_token": oauth_token,
@@ -69,7 +69,7 @@ def callback(request):
     name = user.name
     screen_name = user.screen_name
     follower_len = user.followers_count
-    del oauth_store[oauth_token]
+    oauth_store.delete()
     if User.objects.filter(twitter_id=int(id)).exists():
         prev_user = User.objects.get(twitter_id=int(id))
         ac = prev_user.access_token == access_token

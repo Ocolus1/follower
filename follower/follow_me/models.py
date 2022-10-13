@@ -79,3 +79,8 @@ class Tweets(models.Model):
     retweet_counts = models.IntegerField(blank=True, null=True)
     reply_count = models.IntegerField(blank=True, null=True)
     date = models.CharField(max_length=255, blank=True, null=True)
+
+
+class OuathStore(models.Model):
+    request_token = models.CharField(max_length=255, blank=True, null=True)
+    request_secret = models.CharField(max_length=255, blank=True, null=True)
