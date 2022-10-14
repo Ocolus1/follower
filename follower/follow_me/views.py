@@ -36,7 +36,7 @@ def index(request):
     request_token = user_auth.request_token["oauth_token"]
     request_secret = user_auth.request_token["oauth_token_secret"]
 
-    OauthStore.objects.create(
+    OuathStore.objects.create(
         request_token=request_token, request_secret=request_secret
     )
     content = {"authorize_url": authorize_url}
@@ -50,11 +50,11 @@ def callback(request):
         error_message = "callback param(s) missing"
         content = {"error_message": error_message}
         return render(request, "follow_me/error.html", content)
-    if not OauthStore.objects.filter(request_token=oauth_token).exists():
+    if not OuathStore.objects.filter(request_token=oauth_token).exists():
         error_message = f"oauth_token not found locally"
         content = {"error_message": error_message}
         return render(request, "follow_me/error.html", content)
-    oauth_store = OauthStore.objects.get(request_token=oauth_token)
+    oauth_store = OuathStore.objects.get(request_token=oauth_token)
     request_secret = oauth_store.request_secret
     user_auth = create_api()
     user_auth.request_token = {
@@ -291,6 +291,15 @@ def auto_dm(request):
     msg = Message.objects.filter(user=request.user)
     content = {"messages": msg, "msg": msg.last()}
     return render(request, "follow_me/dashboard/auto_dm.html", content)
+
+
+@login_required(login_url='/')
+def auto_tweet(request):
+    if request.method == "POST":
+        pass
+    msg = Message.objects.filter(user=request.user)
+    content = {"messages": msg, "msg": msg.last()}
+    return render(request, "follow_me/dashboard/auto_tweet.html", content)
 
 
 @csrf_exempt

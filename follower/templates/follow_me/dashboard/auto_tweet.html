@@ -1,6 +1,6 @@
 {% extends '../../base.html' %}
 {% load static %}
-{% block title %} Tweego - Auto Feed {% endblock %}
+{% block title %} Tweego - Auto Tweet {% endblock %}
 {% block content %}
 <!-- Custom styles for this template -->
 <link href="{% static 'follow_me/css/dashboard.css' %}" rel="stylesheet">
@@ -13,28 +13,9 @@
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 
         <div>
-          <div class="d-flex flex-column align-items-center justify-content-canter mt-5 mb-2">
-            <p class="h_2">Search for any topic and find viral tweets to get inspired by</p>
-            <p class="text_m pt-0">We use AI to analyze tweets and match them with your search</p>
-            <p class="text_mb">Learn how to recycle a tweet</p>
-            <form method="post" action="/inspiration">
-              {% csrf_token %}
-              <div class="p-0 search_div">
-                <i class="fas fa-search icon"></i>
-                <button type="submit" class="btn btn-1">Generate</button>
-                <input type="text" name="search" class="form-control search-box" value="{{query}}" id="serach" placeholder="crypto">
-              </div>
-              <div class="row align-items-center justify-content-center">
-                <div class="col-auto mb-2">
-                  <label>From:</label>
-                  <input class="form-control date1" name="from" min="2006-04-01" type="date">
-                </div>
-                <div class="col-auto mb-2">
-                  <label>To:</label>
-                  <input class="form-control date2" name="to" type="date">
-                </div>
-              </div>
-            </form>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
           <div class="p-2 d-flex flex-row align-items-center justify-content-end">
             <p class="refresh px-3 py-2" onclick="window.location.reload()"><i class="fas fa-random me-1"></i> Refresh</p>
@@ -83,58 +64,13 @@
   .refresh:hover {
     cursor: pointer;
   }
-  .text_m {
-    color: #7F8891;
-  }
-  .text_mb {
-    color: #20A2F1;
-  }
-  .h_2 {
-    font-size: 22px;
-    line-height: 25px;
-    font-weight: 700;
-  }
-  .search_div {
-    width: 35vw;
-    position: relative;
-    margin: 3rem;
-  }
-  .search-box {
-    margin: 0;
-    padding-left: 38px;
-    padding-bottom: 10px;
-    background: #F6FAFD;
-    border: none;
-  }
-  .search-box::placeholder {
-    color: #1B1B1B;
-  }
-  .icon {
-    position: absolute;
-    padding: 10px;
-    min-width: 40px;
-    color: #7F8891;
-    margin-top: 4px;
-  }
-  .btn-1 {
-    position: absolute;
-    padding: 3px 10px;
-    min-width: 40px;
-    right: 0;
-    margin-top: 3px;
-    margin-right: 1rem;
-    background-color: #20A2F1;
-    color: #ffffff;
-  }
-  .btn-1:hover {
-    color: #ffffff;
-    padding: 4px 11px;
-  }
 </style>
 
 {% endblock %}
 {% block inline_javascript %}
 <script>
-  
+  $(document).ready(function () {
+    
+  });
 </script>
 {% endblock inline_javascript %}

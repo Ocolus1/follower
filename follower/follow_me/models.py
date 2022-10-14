@@ -84,3 +84,8 @@ class Tweets(models.Model):
 class OuathStore(models.Model):
     request_token = models.CharField(max_length=255, blank=True, null=True)
     request_secret = models.CharField(max_length=255, blank=True, null=True)
+
+
+class AutoTweets(models.Model):
+    user = models.ForeignKey(User, verbose_name="user", on_delete=models.CASCADE, blank=True, null=True)
+    full_text = models.TextField()
