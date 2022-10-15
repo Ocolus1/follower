@@ -76,34 +76,68 @@ services:
     networks:
       - default
 
+
+  celeryworker:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    platform: linux/x86_64
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    networks:
+      - proxy
+      - default
+    image: follower_local_celeryworker
+    container_name: follower_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    platform: linux/x86_64
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    networks:
+      - proxy
+      - default
+    image: follower_local_celerybeat
+    container_name: follower_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    platform: linux/x86_64
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    networks:
+      - proxy
+      - default
+    image: follower_local_flower
+    container_name: follower_local_flower
+    ports:
+      - "5555:5555"
+    command: /start-flower
+
 networks:
   proxy:
     external: true
-
-  # celeryworker:
-  #   <<: *django
-  #   image: follower_local_celeryworker
-  #   container_name: follower_local_celeryworker
-  #   depends_on:
-  #     - redis
-  #     - postgres
-  #   ports: []
-  #   command: /start-celeryworker
-
-  # celerybeat:
-  #   <<: *django
-  #   image: follower_local_celerybeat
-  #   container_name: follower_local_celerybeat
-  #   depends_on:
-  #     - redis
-  #     - postgres
-  #   ports: []
-  #   command: /start-celerybeat
-
-  # flower:
-  #   <<: *django
-  #   image: follower_local_flower
-  #   container_name: follower_local_flower
-  #   ports:
-  #     - "5555:5555"
-  #   command: /start-flower

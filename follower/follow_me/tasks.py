@@ -1,66 +1,45 @@
-# import logging
+import logging
 
-# import tweepy
-# from celery import shared_task
-# from django.conf import settings
+import tweepy
+from celery import shared_task
+from .enums import TimeInterval, SetupStatus
 
-# from .enums import SetupStatus
-# from .models import User
+from .models import User, AutoTweets
+from .config import create_api
 
-# logging.basicConfig(level=logging.INFO)
-# logger = logging.getLogger()
-
-
-# @shared_task(name="computation_heavy_task")
-# def computation_heavy_task(setup_id):
-#     user = User.objects.get(id=setup_id)
-#     logger.info(f"Starting user {user.screen_name}")
-#     if user.is_admin is True:
-#         pass
-#     else:
-#         auth = tweepy.OAuth1UserHandler(
-#             settings.TWITTER_CONSUMER_KEY,
-#             settings.TWITTER_CONSUMER_SECRET,
-#             user.access_token,
-#             user.access_token_secret,
-#         )
-#         logger.info(f"Calling user {user.screen_name} api")
-#         try:
-#             api = tweepy.API(auth)
-#             logger.info(f"Starting user {user.screen_name} api")
-#             try:
-#                 api.verify_credentials()
-#                 id = api.verify_credentials().id_str
-#                 followers = api.get_follower_ids(user_id=id)
-#                 logger.info(f"User follower created {len(followers)}")
-#                 d = []
-#                 for i in user.user_follower.all():
-#                     d.append(i.follower)
-#                 for follower in followers:
-#                     if follower in d:
-#                         pass
-#                     else:
-#                         msg = "Hello! Thanks for folowing me."
-#                         api.send_direct_message(follower, msg)
-#                         logger.info(f"Sent message to {follower}")
-#                         User_list.objects.create(user=user, follower=follower)
-#                         logger.info("User follower created")
-#                 logger.info(f"Credentials user {user.screen_name}")
-#             except Exception as e:
-#                 user.status = SetupStatus.disabled
-#                 user.save()
-#                 logger.error(f"Error creating API {e}", exc_info=True)
-#         except tweepy.errors.TooManyRequests:
-#             print("rate limit reached")
-
-#     logger.info(f"Ending user {user.screen_name}")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
 
 
-# @shared_task(name="check_20_min")
-# def check_20_min(setup_id):
-#     user = User.objects.get(id=setup_id)
-#     if user.status == SetupStatus.active:
-#         pass
-#     else:
-#         user.status = SetupStatus.active
-#         user.save()
+@shared_task(name="computation_heavy_task")
+def computation_heavy_task(setup_id):
+    user = User.objects.get(id=setup_id)
+    logger.info(f"Starting user {user.screen_name}")
+    if user.is_admin == True:
+        pass
+    else:
+        user_auth = create_api()
+        user_auth.set_access_token(
+            user.access_token, user.access_token_secret
+        )
+        logger.info(f"Calling user {user.screen_name} api")
+        try:
+            api = tweepy.API(user_auth, wait_on_rate_limit=True) # wait on rate limit to avoid rate limit error
+            logger.info(f"Starting user {user.screen_name} api")
+            try:
+                api.verify_credentials()
+                if AutoTweets.objects.filter(user=user).order_by('id')[0]:
+                    tweets = AutoTweets.objects.filter(user=user).order_by('id')[0]
+                    api.update_status(tweets.full_text)
+                    logger.info(f"Tweet created by {user.screen_name}")
+                    tweets.delete()
+                    logger.info(f"Tweet delete by {user.screen_name}")
+                    logger.info(f"Credentials user {user.screen_name}")
+            except Exception as e:
+                user.status = SetupStatus.disabled
+                user.save()
+                logger.error("Error creating API", exc_info=True)
+        except tweepy.errors.TooManyRequests:
+            print("rate limit reached")
+
+        logger.info(f"Ending user {user.screen_name}")

@@ -12,5 +12,4 @@ def create_or_update_periodic_task(sender, instance, created, **kwargs):
     else:
         if instance.task is not None:
             instance.task.enabled = instance.status == SetupStatus.active
-            instance.check_task.enabled = instance.status == SetupStatus.active
             instance.task.save()

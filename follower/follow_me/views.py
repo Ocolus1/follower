@@ -3,6 +3,7 @@ import hashlib
 import hmac
 import json
 import logging
+from .enums import TimeInterval, SetupStatus
 
 import tweepy
 from django.conf import settings
@@ -18,7 +19,7 @@ from .utils import parse_tweets
 
 from .api import createSubscription, deleteSubscription, getMySubscription
 from .config import create_api
-from .models import Message, User, Tweets, OuathStore
+from .models import Message, User, Tweets, OuathStore, AutoTweets
 
 logger = logging.getLogger(__name__)
 
@@ -295,11 +296,58 @@ def auto_dm(request):
 
 @login_required(login_url='/')
 def auto_tweet(request):
+    tweets = AutoTweets.objects.filter(user=request.user)
+    user = User.objects.get(twitter_id=request.user.twitter_id)
+    if user.status == SetupStatus.active:
+        status = "On"
+    else:
+        status = "Off"
+    p = Paginator(tweets, 6) # creating a paginator object
+    # getting the desired page number from url
+    page_number = request.GET.get('page')
+    try:
+        tweet_obj = p.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        tweet_obj = p.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        tweet_obj = p.page(p.num_pages)
     if request.method == "POST":
-        pass
-    msg = Message.objects.filter(user=request.user)
-    content = {"messages": msg, "msg": msg.last()}
+        tweet_body = request.POST["tweet_body"]
+        AutoTweets.objects.create(user=request.user, full_text=tweet_body)
+        return redirect("follow_me:auto_tweet")
+    content = {
+        "tweets": tweet_obj,
+        "status": status,
+    }
     return render(request, "follow_me/dashboard/auto_tweet.html", content)
+
+
+@login_required(login_url='/')
+def auto_tweet_status(request):
+    user = User.objects.get(twitter_id=request.user.twitter_id)
+
+    if request.method == "POST":
+        select = request.POST["select_box"]
+        check_box = request.POST.getlist('check_box')
+        # checking the value of select box to get the time interval
+        if select == "1":
+            user.time_interval = TimeInterval.three_hours
+        elif select == "2":
+            user.time_interval = TimeInterval.six_hours
+        else:
+            user.time_interval = TimeInterval.twelve_hours
+        user.setup_task()
+
+        # checking the value of check box to get the status of auto tweet
+        if 'on' in check_box:
+            user.status = SetupStatus.active
+            user.save()
+        else:
+            user.status = SetupStatus.disabled
+            user.save()
+        return redirect("follow_me:auto_tweet")
 
 
 @csrf_exempt

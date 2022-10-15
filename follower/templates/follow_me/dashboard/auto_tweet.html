@@ -10,20 +10,65 @@
 
     <main class="col-md-6 ms-sm-auto col-lg-7 px-md-4">
       <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
 
-        <div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div class="">
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Auto Tweet Settings</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="auto_tweet_status" >
+                  {% csrf_token %}
+                  <div class="modal-body">
+                    {% if status == "On" %}
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" name="check_box" role="switch" id="flexSwitchCheckChecked" checked>
+                      <label class="form-check-label" for="flexSwitchCheckChecked">Start Auto Tweet</label>
+                    </div>
+                    {% else %}
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" name="check_box" role="switch" id="flexSwitchCheckChecked" >
+                      <label class="form-check-label" for="flexSwitchCheckChecked">Start Auto Tweet</label>
+                    </div>
+                    {% endif %}
+                    <select class="form-select my-3" name="select_box" aria-label="Default select example">
+                      <option value="1" selected>3 Hours</option>
+                      <option value="2">6 Hours</option>
+                      <option value="3">12 Hours</option>
+                    </select>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Save changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
+
           <div class="p-2 d-flex flex-row align-items-center justify-content-end">
-            <p class="refresh px-3 py-2" onclick="window.location.reload()"><i class="fas fa-random me-1"></i> Refresh</p>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Tweet settings
+            </button>
+            <p class="refresh px-3 py-2 mx-3 mt-3" onclick="window.location.reload()"><i class="fas fa-random me-1"></i> Refresh</p>
           </div>
           <div class="row mt-2">
             {% for tweet in tweets.object_list  %}
-            <div class="col-md-6" data-id="{{tweet.id}}">
-              {% include "../dashboard/components/comp.html" with tweet=tweet %}
+            <div class="col-md-12 p-3" >
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">{{tweet.full_text}}</p>
+                </div>
+                <div class="card-footer text-muted text-end">
+                  {{tweet.created_At}}
+                </div>
+              </div>
             </div>
             {% endfor %}
           </div>
@@ -64,13 +109,20 @@
   .refresh:hover {
     cursor: pointer;
   }
+  .text_area {
+    border: 2px solid #CCCCCC;
+    width: 50vw;
+    /* height: 15rem; */
+    border-radius: 12px;
+    margin-top: 1rem;
+    padding: .7rem;
+  }
 </style>
 
 {% endblock %}
 {% block inline_javascript %}
 <script>
   $(document).ready(function () {
-    
   });
 </script>
 {% endblock inline_javascript %}

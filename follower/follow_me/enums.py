@@ -2,9 +2,9 @@ from enum import Enum
 
 
 class TimeInterval(Enum):
-    ten_sec = "10 sec"
-    twenty_sec = "20 sec"
-    thirty_sec = "30 sec"
+    three_hours = "3 hr"
+    six_hours = "6 hr"
+    twelve_hours = "12 hr"
 
 
 class SetupStatus(Enum):
