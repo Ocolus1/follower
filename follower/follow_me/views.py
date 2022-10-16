@@ -160,7 +160,7 @@ def dashboard(request):
                 Q(full_text__icontains=query) or Q(reply_count__gte=int(reply_count))
                 or Q(retweet_counts__gte=int(retweet_counts)) or Q(likes_count__gte=int(likes_count))
             )
-    p = Paginator(tweets.order_by("id"), 6) # creating a paginator object
+    p = Paginator(tweets.order_by("-id"), 6) # creating a paginator object
     # getting the desired page number from url
     page_number = request.GET.get('page')
     try:
@@ -186,7 +186,7 @@ def dashboard(request):
 def inspiration(request):
     query = ""
     tweets = Tweets.objects.filter(user=request.user)
-    p = Paginator(tweets.order_by("id"), 6) # creating a paginator object
+    p = Paginator(tweets.order_by("-id"), 6) # creating a paginator object
     # getting the desired page number from url
     page_number = request.GET.get('page')
     try:
