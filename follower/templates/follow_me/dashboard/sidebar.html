@@ -8,7 +8,7 @@
           Tweet Hunter
       </span>
       </a>
-      <button class="btn btn1">Write a tweet</button>
+      <button class="btn btn1 write_tweet">Write a tweet</button>
     </div>
     <ul class="nav mt-4 ps-3 flex-column">
       <li class="nav-item">
@@ -30,6 +30,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/subscribe">
+          <img src="{% static 'follow_me/svg/daily_inspiration.svg' %}" class="" alt="daily_inspiration">
+          <span class="ps-2">Subscription</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#">
           <img src="{% static 'follow_me/svg/analytics.svg' %}" class="" alt="analytics">
           <span class="ps-2">Analytics</span>
@@ -41,12 +47,7 @@
           <span class="ps-2">Settings</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/subscribe">
-          <img src="{% static 'follow_me/svg/daily_inspiration.svg' %}" class="" alt="daily_inspiration">
-          <span class="ps-2">Subscription</span>
-        </a>
-      </li>
+
 
     </ul>
 

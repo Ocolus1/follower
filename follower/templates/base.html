@@ -62,6 +62,7 @@
       let myinputid = document.getElementsByClassName('myinputid'); //get the textarea element
       let outer_con = document.getElementsByClassName('outer_con'); //get the outer container for the tweet
       let menu = document.getElementsByClassName('menu'); // get the menu element
+      let write_tweet = document.getElementsByClassName('write_tweet'); // get the write tweet element
       // This function handles the click event on the menu icon
       // to delete a saved tweet.
       function handleClick (id) {
@@ -93,6 +94,10 @@
           }
         });
       }
+      write_tweet[0].addEventListener('click', () => {
+        // focus the textarea input
+        myinput[0].focus();
+      });
     </script>
   </body>
 </html>

@@ -237,17 +237,17 @@ def inspiration(request):
         parsed_search = parse_tweets(search_object)
         logger.info("got here")
         for search in parsed_search:
-                logger.info("start")
-                Tweets.objects.create(
-                    user=request.user,
-                    profile_image=search['profile_image'],
-                    full_text=search['full_text'],
-                    likes_count=search['likes_count'],
-                    retweet_counts=search['retweet_counts'],
-                    reply_count=search['reply_count'],
-                    date=search['date'],
-                )
-                logger.info("end")
+            logger.info("start")
+            Tweets.objects.create(
+                user=request.user,
+                profile_image=search['profile_image'],
+                full_text=search['full_text'],
+                likes_count=search['likes_count'],
+                retweet_counts=search['retweet_counts'],
+                reply_count=search['reply_count'],
+                date=search['date'],
+            )
+            logger.info("end")
         tweets = Tweets.objects.filter(user=request.user)
     content = {
         "tweets": tweet_obj,
@@ -273,8 +273,9 @@ def create_tweet(request):
             logout(request)
             return HttpResponseRedirect("/")
         api.update_status(tweet)
-        tweet_obj = Tweets.objects.get(pk=id)
-        tweet_obj.delete()
+        if id:
+            tweet_obj = Tweets.objects.get(pk=id)
+            tweet_obj.delete()
         return redirect("follow_me:dashboard")
 
 
