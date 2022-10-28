@@ -135,6 +135,7 @@ class Tweets(models.Model):
     likes_count = models.IntegerField(blank=True, null=True)
     retweet_counts = models.IntegerField(blank=True, null=True)
     reply_count = models.IntegerField(blank=True, null=True)
+    hyperlink = models.CharField(max_length=500, blank=True, null=True)
     date = models.CharField(max_length=255, blank=True, null=True)
 
 

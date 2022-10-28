@@ -64,6 +64,7 @@ services:
       - ./docs:/docs:z
       - ./config:/app/config:z
       - ./follower:/app/follower:z
+      - ./follower/follow_me:/app/follower/follow_me
     ports:
       - "9000:9000"
     command: /start-docs

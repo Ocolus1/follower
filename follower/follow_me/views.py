@@ -111,6 +111,7 @@ def callback(request):
 @login_required(login_url='/')
 def dashboard(request):
     query, reply_count, retweet_counts, likes_count = "", "", "", ""
+    user = User.objects.get(twitter_id=request.user.twitter_id)
 
     # fetching all tweets objects from database pertaining to the request user
     tweets = Tweets.objects.filter(user=request.user)
@@ -177,7 +178,8 @@ def dashboard(request):
         "query": query,
         "likes_count": likes_count,
         "retweet_counts": retweet_counts,
-        "reply_count" : reply_count
+        "reply_count" : reply_count,
+        "user": user,
     }
     return render(request, "follow_me/dashboard/dashboard.html", content)
 
@@ -186,6 +188,7 @@ def dashboard(request):
 def inspiration(request):
     query = ""
     tweets = Tweets.objects.filter(user=request.user)
+    user = User.objects.get(twitter_id=request.user.twitter_id)
     p = Paginator(tweets.order_by("-id"), 20) # creating a paginator object
     # getting the desired page number from url
     page_number = request.GET.get('page')
@@ -198,7 +201,6 @@ def inspiration(request):
         # if page is empty then return last page
         tweet_obj = p.page(p.num_pages)
     if request.method == "POST":
-        user = User.objects.get(twitter_id=request.user.twitter_id)
         user_auth = create_api()
         user_auth.set_access_token(
             user.access_token, user.access_token_secret
@@ -245,6 +247,7 @@ def inspiration(request):
                 likes_count=search['likes_count'],
                 retweet_counts=search['retweet_counts'],
                 reply_count=search['reply_count'],
+                hyperlink=search['hyperlink'],
                 date=search['date'],
             )
             logger.info("end")
@@ -252,6 +255,7 @@ def inspiration(request):
     content = {
         "tweets": tweet_obj,
         "query": query,
+        "user": user
         }
     return render(request, "follow_me/dashboard/daily_inspiration.html", content)
 
@@ -291,11 +295,13 @@ def delete_tweet(request):
 @login_required(login_url='/')
 def auto_dm(request):
     msg = Message.objects.filter(user=request.user)
-    content = {"messages": msg, "msg": msg.last()}
+    user = User.objects.get(twitter_id=request.user.twitter_id)
+    content = {"messages": msg, "msg": msg.last(), "user": user}
     return render(request, "follow_me/dashboard/auto_dm.html", content)
 
 
 @login_required(login_url='/')
+@csrf_exempt
 def auto_tweet(request):
     tweets = AutoTweets.objects.filter(user=request.user)
     user = User.objects.get(twitter_id=request.user.twitter_id)
@@ -315,12 +321,13 @@ def auto_tweet(request):
         # if page is empty then return last page
         tweet_obj = p.page(p.num_pages)
     if request.method == "POST":
-        tweet_body = request.POST["tweet_body"]
+        tweet_body = json.loads(request.body)["tweet_body"]
         AutoTweets.objects.create(user=request.user, full_text=tweet_body)
-        return redirect("follow_me:auto_tweet")
+        return JsonResponse({"status": "success"})
     content = {
         "tweets": tweet_obj,
         "status": status,
+        "user": user
     }
     return render(request, "follow_me/dashboard/auto_tweet.html", content)
 

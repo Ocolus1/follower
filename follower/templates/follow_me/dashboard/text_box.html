@@ -13,17 +13,34 @@
         <div class="p-2 text1">+ New draft</div>
       </div>
     </div>
+    <div class="position-fixed top-0 end-0 p-3 " style="z-index: 11; margin-top: 5rem; margin-right: 2rem;">
+        <div class="toast align-items-center bg-success text-white "
+        id="liveToast2"
+        role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+            <strong>Tweet Added successfully!</strong>
+           </div>
+            <button type="button" class="btn-close me-2 m-auto text-body text-light" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+    </div>
     <form method="post" action="create_tweet" >
       {% csrf_token %}
     <div>
       <input type="text" name="id" class="myinputid" hidden>
-      <textarea class="myinput" name="tweet_body"  placeholder="Write here. &#10; &#10; Skip 3 lines to start a thread."></textarea>
+      <textarea class="myinput" name="tweet_body" maxlength='280' placeholder="Write here. &#10; &#10; Skip 3 lines to start a thread."></textarea>
+      <div class="text-end">
+        <span class="txt_len">0</span>
+        <span>/280</span>
+      </div>
     </div>
     <div>
       <div class="d-flex mt-4 justify-content-between">
         <button class="btn btn-outline-secondary border border-2 px-3 fw-bold tweet_now" type="submit">Tweet now</button>
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <button class="btn btn-secondary" type="submit" formaction="auto_tweet">
+          <button class="btn btn-secondary auto_tweet" type="button">
+          <!-- <button class="btn btn-secondary auto_tweet" type="submit" formaction="auto_tweet"> -->
             Add to Queue
             </span>
           </button>
@@ -73,3 +90,41 @@
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   }
 </style>
+<script>
+$(function() {
+    let btn_auto_tweet = $('.auto_tweet');
+    let textInput_auto_tweet = $('.myinput');
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    $("textarea[maxlength]").bind('input propertychange', function() {
+        $(".txt_len").text($(this).val().length);
+        var maxLength = $(this).attr('maxlength');
+        if ($(this).val().length > maxLength) {
+            $(this).val($(this).val().substring(0, maxLength));
+        }
+    })
+    $(".auto_tweet").on("click", () => {
+      body_send = JSON.stringify({ "tweet_body": $('.myinput').val() })
+      $.ajax({
+        url:"/auto_tweet",
+        type:"POST",
+        headers: {
+          "Accept" : "application/json; charset=utf-8",
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        data: body_send,
+        dataType:"json"
+      })
+      .then((res) => {
+          if (res.status == "success") {
+            var toastLiveExample2 = document.getElementById("liveToast2");
+            var toast2 = new bootstrap.Toast(toastLiveExample2);
+            toast2.show();
+          }
+      })
+      .catch((res) =>
+      {
+        console.log(res)
+      })
+    });
+});
+</script>
