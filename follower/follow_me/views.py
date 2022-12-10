@@ -213,7 +213,7 @@ def inspiration(request):
             return HttpResponseRedirect("/")
         query = request.POST["search"]
         _from = request.POST.get("from")
-        _to = request.POST("to")
+        _to = request.POST.get("to")
         if not query:
             return redirect("follow_me:inspiration")
         elif query and _from and _to:
