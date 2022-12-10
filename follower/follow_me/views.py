@@ -212,8 +212,8 @@ def inspiration(request):
             logout(request)
             return HttpResponseRedirect("/")
         query = request.POST["search"]
-        _from = request.POST["from"]
-        _to = request.POST["to"]
+        _from = request.POST.get("from")
+        _to = request.POST("to")
         if not query:
             return redirect("follow_me:inspiration")
         elif query and _from and _to:
