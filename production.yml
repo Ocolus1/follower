@@ -28,6 +28,7 @@ services:
       - "traefik.http.routers.follow-secure.rule=Host(`follow.africandao.com`)"
       - "traefik.http.routers.follow-secure.service=follow-service"
       - "traefik.http.services.follow-service.loadbalancer.server.port=5000"
+      - "traefik.http.middlewares.follow-https-redirect.redirectscheme.scheme=https"
 
   postgres:
     build:
