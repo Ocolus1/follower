@@ -43,6 +43,7 @@ services:
 
   redis:
     image: redis:6
+    restart: on-failure
 
   celeryworker:
     build:
